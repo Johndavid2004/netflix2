@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Series - Netflix</title>
+  <style>
+    @import url('./styl.css'); /* Importamos la base */
+
+
+body {
+  font-family: Arial, sans-serif;
+  color: #fff;
+  background-color: #141414;
+  background-image: url('https://www.muycomputer.com/wp-content/uploads/2022/06/5-funciones-ocultas-que-no-conocias-de-Netflix-e1656722531484.jpg'); /* Cambia a un fondo de series */
+}
+
+.container {
+  width: 90%;
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+.navbar {
+  background-color: #000;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  color: #e50914;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #e50914;
+}
+
+/* Highlight Section */
+.highlight {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.highlight-content img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.highlight h2 {
+  margin-top: 1rem;
+  font-size: 2.5rem;
+  color: #e50914;
+}
+
+.highlight p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.video-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  overflow: hidden;
+}
+
+.video {
+  width: 100%;
+  max-width: 100%;
+  height: 450px;  /* Ajusta la altura del iframe a tu gusto */
+  display: none; /* Ocultamos todos los videos inicialmente */
+}
+
+.video.active {
+  display: block; /* Solo el video activo se muestra */
+}
+
+
+
+.btn-primary {
+  background-color: #e50914;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+  color: #ffffff;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background-color: #ff6f61;
+}
+
+/* Catalog Section */
+.catalog {
+  margin-top: 2rem;
+}
+
+.catalog h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+}
+
+.carousel-container {
+  position: relative;
+}
+
+.carousel {
+  display: flex;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+.movie {
+  flex: 0 0 27%;
+  text-align: center;
+  padding: 0.10rem;
+  transition: transform 0.12s ease;
+  box-sizing: border-box;
+}
+
+.movie img {
+  width: 85%;
+  height: 80%;
+  border-radius: 20px;
+}
+
+.movie p {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.movie span {
+  font-size: 2rem;
+  font-weight: bold;
+  display: block;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(90, 178, 19, 0.5);
+  border: none;
+  color: #000000;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  z-index: 100;
+}
+
+.carousel-arrow.left {
+  left: 0;
+}
+
+.carousel-arrow.right {
+  right: 0;
+}
+
+.carousel-arrow:hover {
+  background-color: #e50914;
+}
+/* Nuevos estilos */
+.movie:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+    }
+    .modal-content {
+      margin: 5% auto;
+      padding: 20px;
+      width: 70%;
+      background: #222;
+      color: #fff;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .modal-content h3 {
+      margin-bottom: 15px;
+      color: #e50914;
+    }
+    .modal-content p {
+      margin: 10px 0;
+    }
+    .close-modal {
+      background: #e50914;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container">
+      <h1 class="logo">Netflix</h1>
+      <nav>
+        <ul class="nav-links">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="movie.html">MOVIES</a></li>
+            <li><a href="series.html">SERIES</a></li>
+            
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="catalog">
+      <h2>POPULAR SERIES</h2>
+      <div class="carousel">
+        <div class="movie" onclick="openModal('Stranger Things')">
+          <img src="https://example.com/stranger-things.jpg" alt="Stranger Things">
+          <p>Stranger Things</p>
+        </div>
+        <!-- Más películas -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal para detalles -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">X</span>
+      <h3 id="modal-title"></h3>
+      <p id="modal-description">Descripción aquí...</p>
+      <p id="modal-category">Categoría: Ciencia ficción</p>
+      <p id="modal-rating">Clasificación: +16</p>
+      <button onclick="window.location.href='join-now.html'" class="btn-primary">Unirme Ahora</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2024 Netflix. ALL RIGHTS RESERVED.</p>
+  </footer>
+  <script>
+    function openModal(title) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal').style.display = 'block';
+    }
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+  </script>
+  <script>
+    document.querySelectorAll('.carousel-container').forEach(container => {
+  const carousel = container.querySelector('.carousel');
+  const leftArrow = container.querySelector('.carousel-arrow.left');
+  const rightArrow = container.querySelector('.carousel-arrow.right');
+
+
+  leftArrow.addEventListener('click', () => {
+    carousel.scrollBy({ left: -carousel.offsetWidth, behavior: 'smooth' });
+  });
+
+  rightArrow.addEventListener('click', () => {
+    carousel.scrollBy({ left: carousel.offsetWidth, behavior: 'smooth' });
+  });
+});
+window.onload = function () {
+  const videos = document.querySelectorAll('.video'); // Seleccionamos todos los iframes (videos)
+  let currentVideo = 0; // Índice del video actual
+
+  function playNextVideo() {
+    // Ocultar el video actual
+    videos[currentVideo].classList.remove('active');
+    
+    // Mover al siguiente video (si llega al final, reiniciar al primero)
+    currentVideo = (currentVideo + 1) % videos.length;
+    
+    // Mostrar el siguiente video
+    videos[currentVideo].classList.add('active');
+  }
+
+  // Iniciar el primer video
+  videos[currentVideo].classList.add('active');
+  
+  // Reproducir el siguiente video cuando el actual termine
+  setTimeout(function() {
+    playNextVideo();
+  }, 140000); // Este tiempo es de 5 segundos, ajústalo si es necesario
+
+  // Controlar el cambio de video cuando se termine el actual (5 segundos en este ejemplo)
+  videos.forEach(video => {
+    video.addEventListener('ended', playNextVideo);
+  });
+};
+  </script>
+</body>
+</html>
