@@ -92,6 +92,38 @@
     background-color: #ff6f61;
   }
   
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .btn-primary {
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .btn-primary:hover {
+    background-color: #ff6f61;
+  }
+  .language-selector select {
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
   /* Footer */
   .footer {
     background-color: #000;

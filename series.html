@@ -4,318 +4,410 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Series - Netflix</title>
+  <link rel="stylesheet" href="styl.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" type="image/x-icon">
   <style>
-    @import url('./styl.css'); /* Importamos la base */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #000;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
 
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #000;
+      padding: 10px 20px;
+      position: relative;
+    }
 
-body {
-  font-family: Arial, sans-serif;
-  color: #fff;
-  background-color: #141414;
-  background-image: url('https://www.muycomputer.com/wp-content/uploads/2022/06/5-funciones-ocultas-que-no-conocias-de-Netflix-e1656722531484.jpg'); /* Cambia a un fondo de series */
-}
+    .search-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.container {
-  width: 90%;
-  max-width: 1150px;
-  margin: 0 auto;
-}
+    .search-bar {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      width: 300px;
+    }
 
-.navbar {
-  background-color: #000;
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+    .search-button {
+      padding: 10px 15px;
+      background: #e50914;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.3s;
+    }
 
-.logo {
-  color: #e50914;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
+    .search-button:hover {
+      background: #ff6f61;
+    }
 
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-}
+    /* Header Buttons */
+    .header-buttons {
+      display: flex;
+      gap: 15px;
+      position: absolute;
+      top: 10px;
+      right: 440px;
+    }
 
-.nav-links li a {
-  text-decoration: none;
-  color: #fff;
-  transition: color 0.3s ease;
-}
+    .btn-header, .btn-idioma {
+      background: #525151;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
 
-.nav-links li a:hover {
-  color: #e50914;
-}
+    .btn-header:hover, .btn-idioma:hover {
+      background: #ff1904;
+    }
 
-/* Highlight Section */
-.highlight {
-  text-align: center;
-  padding: 2rem 1rem;
-}
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      background-color: #111;
+      padding-top: 20px;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
 
-.highlight-content img {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-}
+    .sidebar.open {
+      left: 0;
+    }
 
-.highlight h2 {
-  margin-top: 1rem;
-  font-size: 2.5rem;
-  color: #e50914;
-}
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-.highlight p {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-.video-carousel {
-  position: relative;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  display: flex;
-  overflow: hidden;
-}
+    .sidebar a img {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
 
-.video {
-  width: 100%;
-  max-width: 100%;
-  height: 450px;  /* Ajusta la altura del iframe a tu gusto */
-  display: none; /* Ocultamos todos los videos inicialmente */
-}
+    .sidebar a:hover {
+      background: #e50914;
+      color: #fff;
+    }
 
-.video.active {
-  display: block; /* Solo el video activo se muestra */
-}
+    /* Movie sections */
+    .category-section {
+      margin: 50px 20px;
+    }
 
+    .category-section h2 {
+      font-size: 2rem;
+      color: #e50914;
+      margin-bottom: 20px;
+    }
 
+    .category-section .movie-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-.btn-primary {
-  background-color: #e50914;
-  padding: 0.75rem 1.5rem;
-  border-radius: 5px;
-  text-transform: uppercase;
-  font-weight: bold;
-  text-decoration: none;
-  color: #ffffff;
-  display: inline-block;
-}
-
-.btn-primary:hover {
-  background-color: #ff6f61;
-}
-
-/* Catalog Section */
-.catalog {
-  margin-top: 2rem;
-}
-
-.catalog h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  padding-left: 1rem;
-}
-
-.carousel-container {
-  position: relative;
-}
-
-.carousel {
-  display: flex;
-  overflow: hidden;
-  scroll-behavior: smooth;
-}
-
-.movie {
-  flex: 0 0 27%;
-  text-align: center;
-  padding: 0.10rem;
-  transition: transform 0.12s ease;
-  box-sizing: border-box;
-}
-
-.movie img {
-  width: 85%;
-  height: 80%;
-  border-radius: 20px;
-}
-
-.movie p {
-  margin-top: 0.5rem;
-  font-size: 1rem;
-}
-
-.movie span {
-  font-size: 2rem;
-  font-weight: bold;
-  display: block;
-}
-
-.carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(90, 178, 19, 0.5);
-  border: none;
-  color: #000000;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-size: 1.5rem;
-  z-index: 100;
-}
-
-.carousel-arrow.left {
-  left: 0;
-}
-
-.carousel-arrow.right {
-  right: 0;
-}
-
-.carousel-arrow:hover {
-  background-color: #e50914;
-}
-/* Nuevos estilos */
-.movie:hover {
-      transform: scale(1.1);
+    .movie {
+      width: 200px;
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
       cursor: pointer;
     }
-    .modal {
+
+    .movie:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .movie img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .movie-info {
+      padding: 10px;
+    }
+
+    .movie-details {
       display: none;
-      position: fixed;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      z-index: 2000;
+      z-index: 10;
+      box-sizing: border-box;
     }
-    .modal-content {
-      margin: 5% auto;
-      padding: 20px;
-      width: 70%;
-      background: #222;
-      color: #fff;
-      border-radius: 10px;
-      text-align: center;
+
+    .movie:hover .movie-details {
+      display: block;
     }
-    .modal-content h3 {
-      margin-bottom: 15px;
-      color: #e50914;
+
+    .movie-details h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
     }
-    .modal-content p {
-      margin: 10px 0;
+
+    .movie-details .stars {
+      color: #ffc107;
+      margin-bottom: 10px;
     }
-    .close-modal {
+
+    .movie-details .actions {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .movie-details .actions button {
       background: #e50914;
-      color: white;
-      padding: 5px 10px;
       border: none;
+      padding: 10px;
+      color: white;
       border-radius: 5px;
       cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .movie-details .actions button:hover {
+      background: #ff6f61;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      color: #fff;
+      padding: 20px;
     }
   </style>
 </head>
 <body>
-  <header class="navbar">
+
+  <!-- Header -->
+  <header>
+    <div class="header-buttons">
+      <button class="btn-header" onclick="location.href='inicio-sesion.html'">Iniciar Sesión</button>
+      <button class="btn-idioma" onclick="changeLanguage()">Cambiar Idioma</button>
+    </div>
+    <i class="fas fa-bars menu-btn" onclick="openMenu()"></i>
+    <div class="search-container">
+      <input type="text" class="search-bar" id="search" placeholder="Search for movies or series...">
+      <button class="search-button" onclick="searchContent()">
+        <i class="fas fa-search"></i> Search
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="close-btn" onclick="closeMenu()">✖ Close</div>
+    <a href="#drama"><img src="https://via.placeholder.com/30" alt=""> Drama</a>
+    <a href="#comedy"><img src="https://via.placeholder.com/30" alt=""> Comedy</a>
+    <a href="#action"><img src="https://via.placeholder.com/30" alt=""> Action</a>
+    <a href="#sci-fi"><img src="https://via.placeholder.com/30" alt=""> Sci-Fi</a>
+    <a href="#horror"><img src="https://via.placeholder.com/30" alt=""> Horror</a>
+    <a href="#romance"><img src="https://via.placeholder.com/30" alt=""> Romance</a>
+    <a href="#thriller"><img src="https://via.placeholder.com/30" alt=""> Thriller</a>
+    <a href="#adventure"><img src="https://via.placeholder.com/30" alt=""> Adventure</a>
+    <a href="#mystery"><img src="https://via.placeholder.com/30" alt=""> Mystery</a>
+    <a href="#fantasy"><img src="https://via.placeholder.com/30" alt=""> Fantasy</a>
+  </div>
+
+  <!-- Main Content -->
+  <main>
     <div class="container">
       <h1 class="logo">Netflix</h1>
       <nav>
         <ul class="nav-links">
-            <li><a href="index.html">HOME</a></li>
-            <li><a href="movie.html">MOVIES</a></li>
-            <li><a href="series.html">SERIES</a></li>
-            
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="movie.html">MOVIES</a></li>
+          <li><a href="series.html">SERIES</a></li>
         </ul>
       </nav>
     </div>
-  </header>
 
-  <main>
-    <section class="catalog">
-      <h2>POPULAR SERIES</h2>
-      <div class="carousel">
-        <div class="movie" onclick="openModal('Stranger Things')">
-          <img src="https://example.com/stranger-things.jpg" alt="Stranger Things">
-          <p>Stranger Things</p>
+    <!-- Drama -->
+    <section id="drama" class="category-section">
+      <h2>Drama</h2>
+      <div class="movie-grid">
+        <div class="movie">
+          <img src="https://example.com/breaking-bad.jpg" alt="Breaking Bad">
+          <div class="movie-info">
+            <h3>Breaking Bad</h3>
+            <p>A chemistry teacher turned drug dealer.</p>
+          </div>
+          <div class="movie-details">
+            <h3>Breaking Bad</h3>
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p><strong>Age Rating:</strong> +18</p>
+            <p><strong>Description:</strong> Walter White's life changes when he enters the drug business.</p>
+            <div class="actions">
+              <button onclick="alert('Added to your list!')">Add to List</button>
+              <button onclick="location.href='join-now.html'">Join Now</button>
+            </div>
+          </div>
         </div>
-        <!-- Más películas -->
       </div>
     </section>
-  </main>
 
-  <!-- Modal para detalles -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal" onclick="closeModal()">X</span>
-      <h3 id="modal-title"></h3>
-      <p id="modal-description">Descripción aquí...</p>
-      <p id="modal-category">Categoría: Ciencia ficción</p>
-      <p id="modal-rating">Clasificación: +16</p>
-      <button onclick="window.location.href='join-now.html'" class="btn-primary">Unirme Ahora</button>
-    </div>
-  </div>
+    <!-- Comedy -->
+    <section id="comedy" class="category-section">
+      <h2>Comedy</h2>
+      <div class="movie-grid">
+        <div class="movie">
+          <img src="https://example.com/the-office.jpg" alt="The Office">
+          <div class="movie-info">
+            <h3>The Office</h3>
+            <p>Mockumentary about a typical office life.</p>
+          </div>
+          <div class="movie-details">
+            <h3>The Office</h3>
+            <div class="stars">⭐⭐⭐⭐</div>
+            <p><strong>Age Rating:</strong> +13</p>
+            <p><strong>Description:</strong> The staff at Dunder Mifflin face hilarious and awkward situations.</p>
+            <div class="actions">
+              <button onclick="alert('Added to your list!')">Add to List</button>
+              <button onclick="location.href='join-now.html'">Join Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Action -->
+    <section id="action" class="category-section">
+      <h2>Action</h2>
+      <div class="movie-grid">
+        <div class="movie">
+          <img src="https://example.com/john-wick.jpg" alt="John Wick">
+          <div class="movie-info">
+            <h3>John Wick</h3>
+            <p>A retired hitman seeks vengeance.</p>
+          </div>
+          <div class="movie-details">
+            <h3>John Wick</h3>
+            <div class="stars">⭐⭐⭐⭐</div>
+            <p><strong>Age Rating:</strong> +18</p>
+            <p><strong>Description:</strong> After the death of his dog, John Wick embarks on a quest for revenge.</p>
+            <div class="actions">
+              <button onclick="alert('Added to your list!')">Add to List</button>
+              <button onclick="location.href='join-now.html'">Join Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <footer class="footer">
     <p>&copy; 2024 Netflix. ALL RIGHTS RESERVED.</p>
   </footer>
+
   <script>
-    function openModal(title) {
-      document.getElementById('modal-title').innerText = title;
-      document.getElementById('modal').style.display = 'block';
+    function openMenu() {
+      document.getElementById('sidebar').classList.add('open');
     }
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
+
+    function closeMenu() {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+
+    function searchContent() {
+      const query = document.getElementById("search").value.toLowerCase();
+      const allMovies = document.querySelectorAll('.movie');
+      let found = false;
+
+      allMovies.forEach(movie => {
+        const title = movie.querySelector("h3").innerText.toLowerCase();
+        if (title.includes(query)) {
+          movie.style.display = "block";
+          found = true;
+        } else {
+          movie.style.display = "none";
+        }
+      });
+
+      if (!found) {
+        alert("No results found");
+      }
+    }
+
+    function changeLanguage() {
+      const currentLanguage = document.documentElement.lang;
+      
+      if (currentLanguage === 'es') {
+        document.documentElement.lang = 'en';
+        document.querySelector('h2').innerText = "WELCOME TO Netflix";
+        document.querySelector('p').innerText = "ENJOY THE BEST CONTENT IN ONE PLACE.";
+        document.querySelector('.footer p').innerText = "© 2024 Netflix. ALL RIGHTS RESERVED.";
+        document.querySelector('.btn-header').innerText = "Log In";
+        
+        // Update sidebar links
+        document.querySelectorAll('.sidebar a')[0].innerText = "Drama";
+        document.querySelectorAll('.sidebar a')[1].innerText = "Comedy";
+        document.querySelectorAll('.sidebar a')[2].innerText = "Action";
+        document.querySelector('.nav-links li:nth-child(1) a').innerText = "HOME";
+        document.querySelector('.nav-links li:nth-child(2) a').innerText = "MOVIES";
+        document.querySelector('.nav-links li:nth-child(3) a').innerText = "SERIES";
+      } else {
+        document.documentElement.lang = 'es';
+        document.querySelector('h2').innerText = "BIENVENIDO A Netflix";
+        document.querySelector('p').innerText = "DISFRUTA DEL MEJOR CONTENIDO EN UN SOLO LUGAR.";
+        document.querySelector('.footer p').innerText = "© 2024 Netflix. TODOS LOS DERECHOS RESERVADOS.";
+        document.querySelector('.btn-header').innerText = "Iniciar Sesión";
+        
+        // Update sidebar links
+        document.querySelectorAll('.sidebar a')[0].innerText = "Drama";
+        document.querySelectorAll('.sidebar a')[1].innerText = "Comedia";
+        document.querySelectorAll('.sidebar a')[2].innerText = "Acción";
+        document.querySelector('.nav-links li:nth-child(1) a').innerText = "INICIO";
+        document.querySelector('.nav-links li:nth-child(2) a').innerText = "PELÍCULAS";
+        document.querySelector('.nav-links li:nth-child(3) a').innerText = "SERIES";
+      }
     }
   </script>
-  <script>
-    document.querySelectorAll('.carousel-container').forEach(container => {
-  const carousel = container.querySelector('.carousel');
-  const leftArrow = container.querySelector('.carousel-arrow.left');
-  const rightArrow = container.querySelector('.carousel-arrow.right');
 
-
-  leftArrow.addEventListener('click', () => {
-    carousel.scrollBy({ left: -carousel.offsetWidth, behavior: 'smooth' });
-  });
-
-  rightArrow.addEventListener('click', () => {
-    carousel.scrollBy({ left: carousel.offsetWidth, behavior: 'smooth' });
-  });
-});
-window.onload = function () {
-  const videos = document.querySelectorAll('.video'); // Seleccionamos todos los iframes (videos)
-  let currentVideo = 0; // Índice del video actual
-
-  function playNextVideo() {
-    // Ocultar el video actual
-    videos[currentVideo].classList.remove('active');
-    
-    // Mover al siguiente video (si llega al final, reiniciar al primero)
-    currentVideo = (currentVideo + 1) % videos.length;
-    
-    // Mostrar el siguiente video
-    videos[currentVideo].classList.add('active');
-  }
-
-  // Iniciar el primer video
-  videos[currentVideo].classList.add('active');
-  
-  // Reproducir el siguiente video cuando el actual termine
-  setTimeout(function() {
-    playNextVideo();
-  }, 140000); // Este tiempo es de 5 segundos, ajústalo si es necesario
-
-  // Controlar el cambio de video cuando se termine el actual (5 segundos en este ejemplo)
-  videos.forEach(video => {
-    video.addEventListener('ended', playNextVideo);
-  });
-};
-  </script>
 </body>
 </html>

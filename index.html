@@ -5,35 +5,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inicio - Netflix</title>
   <link rel="stylesheet" href="styl.css">
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" type="image/x-icon">
+  <style>
+    .header-buttons {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn-header {
+      background: #e50914;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .btn-header:hover {
+      background: #ff6f61;
+    }
+    .btn-idioma {
+      background: #797777;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .btn-idioma:hover {
+      background: #ff6f61;
+    }
+  </style>
 </head>
 <body>
-  <header class="navbar">
-    <div class="container">
-      <h1 class="logo">Netflix</h1>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="movie.html">MOVIES</a></li>
-          <li><a href="series.html">SERIES</a></li>
-          
-        </ul>
-      </nav>
+<header class="navbar">
+  <div class="container">
+    <h1 class="logo">Netflix</h1>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="movie.html">MOVIES</a></li>
+        <li><a href="series.html">SERIES</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="header-buttons">
+    <button class="btn-header" onclick="location.href='inicio-sesion.html'">Iniciar Sesión</button>
+    <button class="btn-idioma" onclick="changeLanguage()">Cambiar Idioma</button>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-content">
+      <h2>WELCOME TO Netflix</h2>
+      <p>ENJOY THE BEST CONTENT IN ONE PLACE.</p>
+      <a href="register.html" class="btn-primary">START NOW</a>
     </div>
-  </header>
+  </section>
+</main>
+<footer class="footer">
+  <p>&copy; 2024 Netflix. ALL RIGHTS RESERVED.</p>
+</footer>
 
-  <main>
-    <section class="hero">
-      <div class="hero-content">
-        <h2>WELCOME TO Netflix</h2>
-        <p>ENJOY THE BEST CONTENT IN ONE PLACE.</p>
-        <a href="register.html" class="btn-primary">START NOW</a>
+<script>
+  function changeLanguage() {
+    const currentLanguage = document.documentElement.lang;
 
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p>&copy; 2024 Netflix. ALL RIGHTS RESERVED.</p>
-  </footer>
+    if (currentLanguage === 'es') {
+      document.documentElement.lang = 'en';
+      document.querySelector('h2').innerText = "WELCOME TO Netflix";
+      document.querySelector('p').innerText = "ENJOY THE BEST CONTENT IN ONE PLACE.";
+      document.querySelector('.btn-primary').innerText = "START NOW";
+      document.querySelector('.footer p').innerText = "© 2024 Netflix. ALL RIGHTS RESERVED.";
+      document.querySelector('.btn-header').innerText = "Log In";
+    } else {
+      document.documentElement.lang = 'es';
+      document.querySelector('h2').innerText = "BIENVENIDO A Netflix";
+      document.querySelector('p').innerText = "DISFRUTA DEL MEJOR CONTENIDO EN UN SOLO LUGAR.";
+      document.querySelector('.btn-primary').innerText = "EMPEZAR AHORA";
+      document.querySelector('.footer p').innerText = "© 2024 Netflix. TODOS LOS DERECHOS RESERVADOS.";
+      document.querySelector('.btn-header').innerText = "Iniciar Sesión";
+    }
+  }
+</script>
 </body>
 </html>
