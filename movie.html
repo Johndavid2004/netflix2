@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>movies - Netflix</title>
+  <title>Movies - Netflix</title>
   <link rel="stylesheet" href="styl.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" type="image/x-icon">
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      background: #000;
+      background-image: url("https://images.frandroid.com/wp-content/uploads/2022/10/netflix-octobre-contenus-2022.jpg");
       color: #fff;
       margin: 0;
       padding: 0;
@@ -22,6 +22,7 @@
       justify-content: space-between;
       background: #000;
       padding: 10px 20px;
+      position: relative;
     }
 
     .search-container {
@@ -54,6 +55,30 @@
 
     .search-button:hover {
       background: #ff6f61;
+    }
+
+    /* Header Buttons */
+    .header-buttons {
+      display: flex;
+      gap: 15px;
+      position: absolute;
+      top: 10px;
+      right: 440px;
+    }
+
+    .btn-header, .btn-idioma {
+      background: #525151;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .btn-header:hover, .btn-idioma:hover {
+      background: #ff1904;
     }
 
     /* Sidebar */
@@ -94,20 +119,6 @@
     .sidebar a:hover {
       background: #e50914;
       color: #fff;
-    }
-
-    .close-btn {
-      font-size: 20px;
-      color: #fff;
-      padding: 10px 20px;
-      text-align: right;
-      cursor: pointer;
-    }
-
-    .menu-btn {
-      font-size: 30px;
-      color: #fff;
-      cursor: pointer;
     }
 
     /* Movie sections */
@@ -151,45 +162,54 @@
 
     .movie-info {
       padding: 10px;
+      text-align: left;
     }
 
-    .movie-details {
+    /* Modal for movie details */
+    .modal {
       display: none;
-      background: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      text-align: left;
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 10;
-      box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
     }
 
-    .movie:hover .movie-details {
-      display: block;
+    .modal-content {
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+      color: #fff;
+      width: 60%;
     }
 
-    .movie-details h3 {
+    .modal-content h3 {
+      margin: 0;
       font-size: 1.5rem;
-      margin-bottom: 10px;
     }
 
-    .movie-details .stars {
+    .modal-content p {
+      font-size: 1rem;
+      margin: 10px 0;
+    }
+
+    .modal-content .stars {
       color: #ffc107;
       margin-bottom: 10px;
     }
 
-    .movie-details .actions {
+    .modal-content .actions {
       margin-top: 15px;
       display: flex;
       gap: 10px;
     }
 
-    .movie-details .actions button {
+    .modal-content .actions button {
       background: #e50914;
       border: none;
       padding: 10px;
@@ -199,134 +219,225 @@
       transition: background 0.3s ease;
     }
 
-    .movie-details .actions button:hover {
+    .modal-content .actions button:hover {
       background: #ff6f61;
     }
 
-    .no-results {
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: #fff;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .close-modal:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Footer */
+    .footer {
       text-align: center;
       color: #fff;
-      font-size: 1.2rem;
-      margin-top: 20px;
+      padding: 20px;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <i class="fas fa-bars menu-btn" onclick="openMenu()"></i>
-  <div class="search-container">
-    <input type="text" class="search-bar" id="search" placeholder="Search for movies or series...">
-    <button class="search-button" onclick="searchContent()">
-      <i class="fas fa-search"></i> Search
-    </button>
-  </div>
-</header>
+  <!-- Header -->
+  <header>
+    <div class="header-buttons">
+      <button class="btn-header" onclick="location.href='inicio-sesion.html'">Iniciar Sesión</button>
+      <button class="btn-idioma" onclick="changeLanguage()">Cambiar Idioma</button>
+    </div>
+    <i class="fas fa-bars menu-btn" onclick="openMenu()"></i>
+    <div class="search-container">
+      <input type="text" class="search-bar" id="search" placeholder="Search for movies or series...">
+      <button class="search-button" onclick="searchContent()">
+        <i class="fas fa-search"></i> Search
+      </button>
+    </div>
+  </header>
 
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-  <div class="close-btn" onclick="closeMenu()">✖ Close</div>
-  <a href="#drama"><img src="https://via.placeholder.com/30" alt=""> Drama</a>
-  <a href="#comedy"><img src="https://via.placeholder.com/30" alt=""> Comedy</a>
-  <a href="#action"><img src="https://via.placeholder.com/30" alt=""> Action</a>
-  <a href="#sci-fi"><img src="https://via.placeholder.com/30" alt=""> Sci-Fi</a>
-  <a href="#horror"><img src="https://via.placeholder.com/30" alt=""> Horror</a>
-  <a href="#romance"><img src="https://via.placeholder.com/30" alt=""> Romance</a>
-</div>
-<main>
-  <div class="container">
-    <h1 class="logo">Netflix</h1>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="index.html">HOME</a></li>
-        <li><a href="movie.html">MOVIES</a></li>
-        <li><a href="series.html">SERIES</a></li>
-        
-      </ul>
-    </nav>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="close-btn" onclick="closeMenu()">✖ Close</div>
+    <a href="#drama"><img src="https://via.placeholder.com/30" alt=""> Drama</a>
+    <a href="#comedy"><img src="https://via.placeholder.com/30" alt=""> Comedy</a>
+    <a href="#action"><img src="https://via.placeholder.com/30" alt=""> Action</a>
+    <a href="#sci-fi"><img src="https://via.placeholder.com/30" alt=""> Sci-Fi</a>
+    <a href="#horror"><img src="https://via.placeholder.com/30" alt=""> Horror</a>
+    <a href="#romance"><img src="https://via.placeholder.com/30" alt=""> Romance</a>
+    <a href="#thriller"><img src="https://via.placeholder.com/30" alt=""> Thriller</a>
+    <a href="#adventure"><img src="https://via.placeholder.com/30" alt=""> Adventure</a>
+    <a href="#mystery"><img src="https://via.placeholder.com/30" alt=""> Mystery</a>
+    <a href="#fantasy"><img src="https://via.placeholder.com/30" alt=""> Fantasy</a>
   </div>
-  <!-- Drama -->
-  <section id="drama" class="category-section">
-    <h2>Drama</h2>
-    <div class="movie-grid">
-      <div class="movie">
-        <img src="https://example.com/breaking-bad.jpg" alt="Breaking Bad">
-        <div class="movie-info">
-          <h3>Breaking Bad</h3>
-          <p>A chemistry teacher turned drug dealer.</p>
-        </div>
-        <div class="movie-details">
-          <h3>Breaking Bad</h3>
-          <div class="stars">⭐⭐⭐⭐⭐</div>
-          <p><strong>Age Rating:</strong> +18</p>
-          <p><strong>Description:</strong> Walter White's life changes when he enters the drug business.</p>
-          <div class="actions">
-            <button onclick="alert('Added to your list!')">Add to List</button>
-            <button onclick="location.href='join-now.html'">Join Now</button>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+      <h1 class="logo">Netflix</h1>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="movie.html">MOVIES</a></li>
+          <li><a href="series.html">SERIES</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Action Movies -->
+    <section id="action" class="category-section">
+      <h2>Action Movies</h2>
+      <div class="movie-grid">
+        <div class="movie" onclick="openModal('John Wick', 'https://example.com/john-wick.jpg')">
+          <img src="https://example.com/john-wick.jpg" alt="John Wick">
+          <div class="movie-info">
+            <h3>John Wick</h3>
+            <p>A retired hitman seeks vengeance.</p>
+            <p><strong>Release:</strong> 2014</p>
+            <p><strong>Genre:</strong> Action, Thriller</p>
+            <p><strong>Duration:</strong> 101 min</p>
           </div>
         </div>
       </div>
-      <div class="movie">
-        <img src="https://example.com/house-of-cards.jpg" alt="House of Cards">
-        <div class="movie-info">
-          <h3>House of Cards</h3>
-          <p>A ruthless politician's rise to power.</p>
-        </div>
-        <div class="movie-details">
-          <h3>House of Cards</h3>
-          <div class="stars">⭐⭐⭐⭐</div>
-          <p><strong>Age Rating:</strong> +16</p>
-          <p><strong>Description:</strong> Frank Underwood manipulates his way to the presidency.</p>
-          <div class="actions">
-            <button onclick="alert('Added to your list!')">Add to List</button>
-            <button onclick="location.href='join-now.html'">Join Now</button>
+    </section>
+
+    <!-- Comedy Movies -->
+    <section id="comedy" class="category-section">
+      <h2>Comedy Movies</h2>
+      <div class="movie-grid">
+        <div class="movie" onclick="openModal('Superbad', 'https://example.com/superbad.jpg')">
+          <img src="https://example.com/superbad.jpg" alt="Superbad">
+          <div class="movie-info">
+            <h3>Superbad</h3>
+            <p>Two high school seniors trying to enjoy their last days before graduation.</p>
+            <p><strong>Release:</strong> 2007</p>
+            <p><strong>Genre:</strong> Comedy</p>
+            <p><strong>Duration:</strong> 113 min</p>
           </div>
         </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal for movie details -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal()">✖</button>
+      <img id="modal-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7AUQ1ap545wJq1Op_9GPLFAV15boesLoyZA&s" alt="" style="width: 100%; border-radius: 10px;">
+      <h3 id="modal-title">Breaking Bad</h3>
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p id="modal-description">Walter White's life changes when he enters the drug business.</p>
+      <p><strong>Age Rating:</strong> +18</p>
+      <div class="actions">
+        <button onclick="alert('Added to your list!')">Add to List</button>
+        <button onclick="location.href='join-now.html'">Join Now</button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Add other categories and series here -->
-</main>
-<footer class="footer">
-  <p>&copy; 2024 Netflix. ALL RIGHTS RESERVED.</p>
-</footer>
+  <footer class="footer">
+    <p>&copy; 2024 Netflix. ALL RIGHTS RESERVED.</p>
+  </footer>
 
-<p class="no-results" id="noResults" style="display: none;">Not found. Try another search.</p>
+  <script>
+    // Open and close modal
+    function openModal(movieName, imageUrl) {
+      const modal = document.getElementById('modal');
+      const title = document.getElementById('modal-title');
+      const description = document.getElementById('modal-description');
+      const image = document.getElementById('modal-image');
 
-<script>
-  const sidebar = document.getElementById('sidebar');
-  const noResults = document.getElementById('noResults');
-  const allMovies = document.querySelectorAll(".movie");
-
-  function openMenu() {
-    sidebar.classList.add('open');
-  }
-
-  function closeMenu() {
-    sidebar.classList.remove('open');
-  }
-
-  function searchContent() {
-    const query = document.getElementById("search").value.toLowerCase();
-    let found = false;
-
-    allMovies.forEach(movie => {
-      const title = movie.querySelector("h3").innerText.toLowerCase();
-      if (title.includes(query)) {
-        movie.style.display = "block";
-        found = true;
-      } else {
-        movie.style.display = "none";
+      // Set modal content based on movie clicked
+      if (movieName === 'John Wick') {
+        title.innerText = 'John Wick';
+        description.innerText = 'A retired hitman seeks vengeance.';
+      } else if (movieName === 'Superbad') {
+        title.innerText = 'Superbad';
+        description.innerText = 'Two high school seniors trying to enjoy their last days before graduation.';
       }
-    });
 
-    if (!found) {
-      noResults.style.display = "block";
-    } else {
-      noResults.style.display = "none";
+      image.src = imageUrl;
+      modal.style.display = 'flex';
     }
-  }
-</script>
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    // Sidebar open and close
+    function openMenu() {
+      document.getElementById('sidebar').classList.add('open');
+    }
+
+    function closeMenu() {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+
+    // Search function
+    function searchContent() {
+      const query = document.getElementById("search").value.toLowerCase();
+      const allMovies = document.querySelectorAll('.movie');
+      let found = false;
+
+      allMovies.forEach(movie => {
+        const title = movie.querySelector("h3").innerText.toLowerCase();
+        if (title.includes(query)) {
+          movie.style.display = "block";
+          found = true;
+        } else {
+          movie.style.display = "none";
+        }
+      });
+
+      if (!found) {
+        alert("No results found");
+      }
+    }
+
+    // Change language function
+    function changeLanguage() {
+      const currentLanguage = document.documentElement.lang;
+      
+      if (currentLanguage === 'es') {
+        document.documentElement.lang = 'en';
+        document.querySelector('h2').innerText = "WELCOME TO Netflix";
+        document.querySelector('p').innerText = "ENJOY THE BEST CONTENT IN ONE PLACE.";
+        document.querySelector('.footer p').innerText = "© 2024 Netflix. ALL RIGHTS RESERVED.";
+        document.querySelector('.btn-header').innerText = "Log In";
+        
+        // Update sidebar links
+        document.querySelectorAll('.sidebar a')[0].innerText = "Drama";
+        document.querySelectorAll('.sidebar a')[1].innerText = "Comedy";
+        document.querySelectorAll('.sidebar a')[2].innerText = "Action";
+        document.querySelector('.nav-links li:nth-child(1) a').innerText = "HOME";
+        document.querySelector('.nav-links li:nth-child(2) a').innerText = "MOVIES";
+        document.querySelector('.nav-links li:nth-child(3) a').innerText = "SERIES";
+      } else {
+        document.documentElement.lang = 'es';
+        document.querySelector('h2').innerText = "BIENVENIDO A Netflix";
+        document.querySelector('p').innerText = "DISFRUTA DEL MEJOR CONTENIDO EN UN SOLO LUGAR.";
+        document.querySelector('.footer p').innerText = "© 2024 Netflix. TODOS LOS DERECHOS RESERVADOS.";
+        document.querySelector('.btn-header').innerText = "Iniciar Sesión";
+        
+        // Update sidebar links
+        document.querySelectorAll('.sidebar a')[0].innerText = "Drama";
+        document.querySelectorAll('.sidebar a')[1].innerText = "Comedia";
+        document.querySelectorAll('.sidebar a')[2].innerText = "Acción";
+        document.querySelector('.nav-links li:nth-child(1) a').innerText = "INICIO";
+        document.querySelector('.nav-links li:nth-child(2) a').innerText = "PELÍCULAS";
+        document.querySelector('.nav-links li:nth-child(3) a').innerText = "SERIES";
+      }
+    }
+  </script>
+
 </body>
 </html>

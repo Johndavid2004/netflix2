@@ -10,7 +10,7 @@
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      background: #000;
+      background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSSr-Us7l0641pZrr_lL0OovaL_CYbrnQDadW6YYyQoXbsYI2X-mlHzmMO_3nBU-hSgQc&usqp=CAU");
       color: #fff;
       margin: 0;
       padding: 0;
@@ -121,7 +121,7 @@
       color: #fff;
     }
 
-    /* Movie sections */
+    /* Series sections */
     .category-section {
       margin: 50px 20px;
     }
@@ -162,45 +162,54 @@
 
     .movie-info {
       padding: 10px;
+      text-align: left;
     }
 
-    .movie-details {
+    /* Modal for movie details */
+    .modal {
       display: none;
-      background: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      text-align: left;
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 10;
-      box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
     }
 
-    .movie:hover .movie-details {
-      display: block;
+    .modal-content {
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+      color: #fff;
+      width: 60%;
     }
 
-    .movie-details h3 {
+    .modal-content h3 {
+      margin: 0;
       font-size: 1.5rem;
-      margin-bottom: 10px;
     }
 
-    .movie-details .stars {
+    .modal-content p {
+      font-size: 1rem;
+      margin: 10px 0;
+    }
+
+    .modal-content .stars {
       color: #ffc107;
       margin-bottom: 10px;
     }
 
-    .movie-details .actions {
+    .modal-content .actions {
       margin-top: 15px;
       display: flex;
       gap: 10px;
     }
 
-    .movie-details .actions button {
+    .modal-content .actions button {
       background: #e50914;
       border: none;
       padding: 10px;
@@ -210,8 +219,24 @@
       transition: background 0.3s ease;
     }
 
-    .movie-details .actions button:hover {
+    .modal-content .actions button:hover {
       background: #ff6f61;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: #fff;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .close-modal:hover {
+      background-color: rgba(255, 255, 255, 0.2);
     }
 
     /* Footer */
@@ -253,7 +278,7 @@
     <a href="#mystery"><img src="https://via.placeholder.com/30" alt=""> Mystery</a>
     <a href="#fantasy"><img src="https://via.placeholder.com/30" alt=""> Fantasy</a>
   </div>
-
+  
   <!-- Main Content -->
   <main>
     <div class="container">
@@ -269,23 +294,16 @@
 
     <!-- Drama -->
     <section id="drama" class="category-section">
-      <h2>Drama</h2>
+      <h2>Drama Series</h2>
       <div class="movie-grid">
-        <div class="movie">
-          <img src="https://example.com/breaking-bad.jpg" alt="Breaking Bad">
+        <div class="movie" onclick="openModal('Breaking Bad', 'https://example.com/breaking-bad.jpg')">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7AUQ1ap545wJq1Op_9GPLFAV15boesLoyZA&s" alt="Breaking Bad">
           <div class="movie-info">
             <h3>Breaking Bad</h3>
             <p>A chemistry teacher turned drug dealer.</p>
-          </div>
-          <div class="movie-details">
-            <h3>Breaking Bad</h3>
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <p><strong>Age Rating:</strong> +18</p>
-            <p><strong>Description:</strong> Walter White's life changes when he enters the drug business.</p>
-            <div class="actions">
-              <button onclick="alert('Added to your list!')">Add to List</button>
-              <button onclick="location.href='join-now.html'">Join Now</button>
-            </div>
+            <p><strong>Release:</strong> 2008</p>
+            <p><strong>Genre:</strong> Crime, Drama</p>
+            <p><strong>Duration:</strong> 60 min per episode</p>
           </div>
         </div>
       </div>
@@ -293,59 +311,71 @@
 
     <!-- Comedy -->
     <section id="comedy" class="category-section">
-      <h2>Comedy</h2>
+      <h2>Comedy Series</h2>
       <div class="movie-grid">
-        <div class="movie">
+        <div class="movie" onclick="openModal('The Office', 'https://example.com/the-office.jpg')">
           <img src="https://example.com/the-office.jpg" alt="The Office">
           <div class="movie-info">
             <h3>The Office</h3>
             <p>Mockumentary about a typical office life.</p>
-          </div>
-          <div class="movie-details">
-            <h3>The Office</h3>
-            <div class="stars">⭐⭐⭐⭐</div>
-            <p><strong>Age Rating:</strong> +13</p>
-            <p><strong>Description:</strong> The staff at Dunder Mifflin face hilarious and awkward situations.</p>
-            <div class="actions">
-              <button onclick="alert('Added to your list!')">Add to List</button>
-              <button onclick="location.href='join-now.html'">Join Now</button>
-            </div>
+            <p><strong>Release:</strong> 2005</p>
+            <p><strong>Genre:</strong> Comedy, Mockumentary</p>
+            <p><strong>Duration:</strong> 22 min per episode</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Action -->
-    <section id="action" class="category-section">
-      <h2>Action</h2>
-      <div class="movie-grid">
-        <div class="movie">
-          <img src="https://example.com/john-wick.jpg" alt="John Wick">
-          <div class="movie-info">
-            <h3>John Wick</h3>
-            <p>A retired hitman seeks vengeance.</p>
-          </div>
-          <div class="movie-details">
-            <h3>John Wick</h3>
-            <div class="stars">⭐⭐⭐⭐</div>
-            <p><strong>Age Rating:</strong> +18</p>
-            <p><strong>Description:</strong> After the death of his dog, John Wick embarks on a quest for revenge.</p>
-            <div class="actions">
-              <button onclick="alert('Added to your list!')">Add to List</button>
-              <button onclick="location.href='join-now.html'">Join Now</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- More categories and series here -->
 
   </main>
+
+  <!-- Modal for series details -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal()">✖</button>
+      <img id="modal-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7AUQ1ap545wJq1Op_9GPLFAV15boesLoyZA&s" alt="Breaking Bad" style="width: 50%; border-radius: 10px;">
+      <h3 id="modal-title">Breaking Bad</h3>
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p id="modal-description">Walter White's life changes when he enters the drug business.</p>
+      <p><strong>Age Rating:</strong> +18</p>
+      <div class="actions">
+        <button onclick="alert('Added to your list!')">Add to List</button>
+        <button onclick="location.href='register.html'">Join Now</button>
+      </div>
+    </div>
+  </div>
 
   <footer class="footer">
     <p>&copy; 2024 Netflix. ALL RIGHTS RESERVED.</p>
   </footer>
 
   <script>
+    // Open and close modal
+    function openModal(seriesName, imageUrl) {
+      const modal = document.getElementById('modal');
+      const title = document.getElementById('modal-title');
+      const description = document.getElementById('modal-description');
+      const image = document.getElementById('modal-image');
+
+      // Set modal content based on series clicked
+      if (seriesName === 'Breaking Bad') {
+        title.innerText = 'Breaking Bad';
+        description.innerText = 'Walter White\'s life changes when he enters the drug business.';
+      } else if (seriesName === 'The Office') {
+        title.innerText = 'The Office';
+        description.innerText = 'Mockumentary about a typical office life.';
+      }
+
+      image.src = imageUrl;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    // Sidebar open and close
     function openMenu() {
       document.getElementById('sidebar').classList.add('open');
     }
@@ -354,6 +384,7 @@
       document.getElementById('sidebar').classList.remove('open');
     }
 
+    // Search function
     function searchContent() {
       const query = document.getElementById("search").value.toLowerCase();
       const allMovies = document.querySelectorAll('.movie');
@@ -374,6 +405,7 @@
       }
     }
 
+    // Change language function
     function changeLanguage() {
       const currentLanguage = document.documentElement.lang;
       
